@@ -45,6 +45,11 @@ docker run -it --rm --name certbot \
 -d "mydomain.com"                                                  ==> desired single domain name
 --manual-auth-hook=/bin/letsencrypt_nic_ru.py                      ==> path to letsencrypt_nic_ru.py script
 ```
+**For crontab tasks:**
+```
+--quiet ==> add to docker options
+-it     ==> remove from docker options
+```
 
 _In the example above the module's logs will be written in path '/tmp/letsencrypt.log'_
 
