@@ -429,15 +429,18 @@ class LetsHook:
 
             # Check `_acme-challenge` if exist and delete if entry is obsoleted
             txt_records_ids = self.nic_get_acme_records_ids(xml_content=records)
-            if txt_records_ids:
-                self.nic_del_record(auth_token=nicru_token, service=self.nicru_service, zone=self.certbot_domain, rr_ids=txt_records_ids)
+            if any(txt_records_ids):
+                self.nic_del_record(auth_token=nicru_token, service=self.nicru_service, zone=self.certbot_domain,
+                                    rr_ids=txt_records_ids)
                 self.nic_commit(auth_token=nicru_token, service=self.nicru_service, zone=self.certbot_domain)
 
-            self.nic_put_txt(auth_token=nicru_token, service=self.nicru_service, zone=self.certbot_domain, acme_token=self.certbot_validation, rr_ids=txt_records_ids)
+            if self.nic_put_txt(auth_token=nicru_token, service=self.nicru_service, zone=self.certbot_domain,
+                                acme_token=self.certbot_validation, rr_ids=txt_records_ids):
+                self.nic_commit(auth_token=nicru_token, service=self.nicru_service, zone=self.certbot_domain)
+                self.dns_check_txt_in_ns(zone=self.certbot_domain, acme_token=self.certbot_validation)
+            else:
+                sys.exit(1)
 
-            self.nic_commit(auth_token=nicru_token, service=self.nicru_service, zone=self.certbot_domain)
-
-            self.dns_check_txt_in_ns(zone=self.certbot_domain, acme_token=self.certbot_validation)
         else:
             sys.exit(1)
 
