@@ -52,4 +52,5 @@ docker run -it --rm --name certbot \
 ```
 
 _In the example above the module's logs will be written in the path '/tmp/letsencrypt.log'_
+#
 
