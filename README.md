@@ -51,5 +51,5 @@ docker run -it --rm --name certbot \
 -it     ==> remove from docker options
 ```
 
-_In the example above the module's logs will be written in path '/tmp/letsencrypt.log'_
+_In the example above the module's logs will be written in the path '/tmp/letsencrypt.log'_
 
